@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-fallback-key")
 
-DEBUG = False   # IMPORTANT: MUST be False on Render
+DEBUG = True   # IMPORTANT: MUST be False on Render
 
 ALLOWED_HOSTS = [
     "crop-tracker-system-1.onrender.com",
