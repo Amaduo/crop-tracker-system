@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+
+            <div class="card shadow-lg border-0" style="border-radius: 16px; overflow: hidden;">
+
+                <!-- HEADER -->
+                <div class="card-header text-white text-center"
+                     style="background: linear-gradient(135deg, #1b5e20, #66bb6a);">
+                    <h3 class="mb-0">✏️ Update Field: {{ field.name }}</h3>
+                </div>
+
+                <div class="card-body p-4" style="background: #f9fff9;">
+
+                    <!-- CURRENT FIELD STATE -->
+                    <div class="mb-4 p-3 rounded"
+                         style="background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 12px;">
+                        <strong>🌱 Crop:</strong> {{ field.crop_type }} <br>
+                        <strong>📌 Current Stage:</strong> {{ field.current_stage }} <br>
+                        <strong>👨‍🌾 Assigned Agent:</strong> {{ field.assigned_agent }}
+                    </div>
+
+                    <!-- UPDATE FORM -->
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Update Stage</label>
+                            <select name="stage" class="form-control"
+                                    style="border-radius: 10px; padding: 10px;" required>
+                                <option value="Planted">Planted</option>
+                                <option value="Growing">Growing</option>
+                                <option value="Ready">Ready</option>
+                                <option value="Harvested">Harvested</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Notes / Observations</label>
+                            <textarea name="notes" class="form-control" rows="4"
+                                      placeholder="Write observations..."
+                                      style="border-radius: 10px; padding: 10px;" required></textarea>
+                        </div>
+
+                        <button class="btn btn-success w-100"
+                                style="border-radius: 10px; padding: 10px; font-weight: bold;">
+                            Submit Update
+                        </button>
+
+                    </form>
+
+                    <hr class="my-4">
+
+                    <!-- HISTORY -->
+                    <h5 class="mb-3">📜 Previous Updates</h5>
+
+                    {% for u in updates %}
+                        <div class="p-3 mb-3"
+                             style="background: #ffffff; border-left: 4px solid #66bb6a; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+
+                            <strong>Stage:</strong>
+                            <span class="badge bg-success">{{ u.stage }}</span>
+                            <br>
+
+                            <strong>Notes:</strong> {{ u.notes }} <br>
+
+                            <small class="text-muted">
+                                By {{ u.agent.username }} on {{ u.date }}
+                            </small>
+
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">No updates yet.</p>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

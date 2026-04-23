@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    }
+
+    .page-title {
+        font-weight: 800;
+        color: #1b5e20;
+        margin-bottom: 20px;
+    }
+
+    .table-container {
+        background: rgba(255,255,255,0.9);
+        padding: 20px;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        overflow-x: auto;
+        backdrop-filter: blur(6px);
+    }
+
+    table {
+        width: 100%;
+        min-width: 750px;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: linear-gradient(135deg, #2e7d32, #43a047);
+        color: white;
+    }
+
+    th, td {
+        padding: 12px;
+        font-size: 14px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    tr:hover {
+        background: #f1f8e9;
+        transition: 0.2s;
+    }
+
+    .status-active {
+        color: #2e7d32;
+        font-weight: bold;
+    }
+
+    .status-risk {
+        color: #ef6c00;
+        font-weight: bold;
+    }
+
+    .status-done {
+        color: #1565c0;
+        font-weight: bold;
+    }
+
+    .btn {
+        border-radius: 8px;
+        font-size: 13px;
+        padding: 5px 10px;
+        margin-right: 4px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, #f9a825, #fbc02d);
+        color: white;
+    }
+
+    .btn-info {
+        background: linear-gradient(135deg, #1e88e5, #42a5f5);
+        color: white;
+    }
+
+    .btn-secondary {
+        background: #757575;
+        color: white;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+        transition: 0.2s;
+    }
+
+    @media (max-width: 768px) {
+        table {
+            min-width: 600px;
+        }
+
+        th, td {
+            font-size: 13px;
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="container py-3">
+
+<h2 class="page-title">🌾 Fields Management</h2>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+<tr>
+    <th>Name</th>
+    <th>Crop</th>
+    <th>Stage</th>
+    <th>Status</th>
+    <th>Agent</th>
+    <th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for f in fields %}
+<tr>
+    <td>{{ f.name }}</td>
+    <td>{{ f.crop_type }}</td>
+    <td>{{ f.current_stage }}</td>
+
+    <td>
+        {% if f.status == "Active" %}
+            <span class="status-active">Active</span>
+        {% elif f.status == "At Risk" %}
+            <span class="status-risk">At Risk</span>
+        {% else %}
+            <span class="status-done">Completed</span>
+        {% endif %}
+    </td>
+
+    <td>{{ f.assigned_agent }}</td>
+
+    <td>
+
+        <!-- Agent action -->
+        {% if user.role == 'agent' %}
+            <a href="{% url 'updates_page' f.id %}" class="btn btn-warning">
+                Updates
+            </a>
+        {% endif %}
+
+        <!-- Admin action -->
+        {% if user.role == 'admin' %}
+            <a href="{% url 'field_updates' f.id %}" class="btn btn-info">
+                View Updates
+            </a>
+        {% endif %}
+
+      
+    </td>
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

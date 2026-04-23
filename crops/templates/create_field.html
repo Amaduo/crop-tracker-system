@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-12">
+
+            <div class="card shadow-lg border-0" style="border-radius: 16px; overflow: hidden;">
+
+                <div class="card-header text-white text-center" style="background: linear-gradient(135deg, #2e7d32, #66bb6a);">
+                    <h3 class="mb-0">➕ Create New Field</h3>
+                </div>
+
+                <div class="card-body p-4" style="background: #f9fff9;">
+
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Name</label>
+                            <input type="text" name="name" class="form-control" required
+                                   style="border-radius: 10px; padding: 10px;">
+                        </div>
+
+                        <!-- Crop type -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Crop type</label>
+                            <input type="text" name="crop_type" class="form-control" required
+                                   style="border-radius: 10px; padding: 10px;">
+                        </div>
+
+                        <!-- Planting date -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Planting date</label>
+                            <input type="date" name="planting_date" class="form-control" required
+                                   style="border-radius: 10px; padding: 10px;">
+                        </div>
+
+                        <!-- Current stage -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Current stage</label>
+                            <select name="current_stage" class="form-control" required
+                                    style="border-radius: 10px; padding: 10px;">
+                                <option>Planted</option>
+                                <option>Growing</option>
+                                <option>Ready</option>
+                                <option>Harvested</option>
+                            </select>
+                        </div>
+
+                        <!-- Assigned Agent (REPLACED) -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Assigned Agent</label>
+
+                            <select name="assigned_agent"
+                                    class="form-control"
+                                    required
+                                    style="border-radius: 10px; padding: 10px;">
+
+                                {% for user in users %}
+                                    <option value="{{ user.id }}">{{ user.username }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+                        <!-- Submit -->
+                        <button class="btn btn-success w-100 mt-2"
+                                style="border-radius: 10px; padding: 10px; font-weight: bold;">
+                            Save Field
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

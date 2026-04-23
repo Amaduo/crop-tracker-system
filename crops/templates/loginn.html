@@ -1,0 +1,93 @@
+<h2 class="text-center" style="color:#1b5e20; font-weight:700; margin-top:20px;">
+    Login
+</h2>
+
+<div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    font-family: Arial, sans-serif;
+">
+
+    <div style="
+        width: 100%;
+        max-width: 380px;
+        background: #ffffff;
+        padding: 35px;
+        border-radius: 18px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        border: 1px solid #c8e6c9;
+    ">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div style="margin-bottom: 25px;">
+                <label style="font-size: 13px; color:#2e7d32; display:block; margin-bottom:8px;">
+                    Username
+                </label>
+                <input type="text" name="username" placeholder="Enter username" required
+                    style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 1px solid #a5d6a7;
+                        border-radius: 10px;
+                        outline: none;
+                        background: #f9fff9;
+                    "
+                    onfocus="this.style.border='1px solid #66bb6a'"
+                    onblur="this.style.border='1px solid #a5d6a7'">
+            </div>
+
+            <!-- Password -->
+            <div style="margin-bottom: 30px;">
+                <label style="font-size: 13px; color:#2e7d32; display:block; margin-bottom:8px;">
+                    Password
+                </label>
+                <input type="password" name="password" placeholder="Enter password" required
+                    style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 1px solid #a5d6a7;
+                        border-radius: 10px;
+                        outline: none;
+                        background: #f9fff9;
+                    "
+                    onfocus="this.style.border='1px solid #66bb6a'"
+                    onblur="this.style.border='1px solid #a5d6a7'">
+            </div>
+
+            <button type="submit"
+                style="
+                    width: 100%;
+                    padding: 12px;
+                    background: linear-gradient(135deg, #66bb6a, #43a047);
+                    border: none;
+                    color: white;
+                    border-radius: 10px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: 0.3s;
+                "
+                onmouseover="this.style.transform='scale(1.02)'"
+                onmouseout="this.style.transform='scale(1)'">
+                Login
+            </button>
+        </form>
+
+        <p style="color: #c62828; text-align: center; margin-top: 15px; font-size: 14px;">
+            {{ error }}
+        </p>
+
+        <div style="text-align: center; margin-top: 18px;">
+            <a href="{% url 'register' %}" style="color: #2e7d32; text-decoration: none; font-weight: 500;">
+                Create account
+            </a>
+        </div>
+
+    </div>
+
+</div>

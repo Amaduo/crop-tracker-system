@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>📊 Updates for: {{ field.name }}</h2>
+
+<div class="card p-3">
+
+<table class="table table-bordered">
+    <tr>
+        <th>Stage</th>
+        <th>Notes</th>
+        <th>Date</th>
+    </tr>
+
+    {% for u in updates %}
+    <tr>
+        <td>{{ u.stage }}</td>
+        <td>{{ u.notes }}</td>
+        <td>{{ u.date }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">No updates yet</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</div>
+
+{% endblock %}

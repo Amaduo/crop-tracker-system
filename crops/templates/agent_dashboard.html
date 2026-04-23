@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    }
+
+    .dashboard-title {
+        font-weight: 800;
+        color: #1b5e20;
+        margin-bottom: 25px;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-card {
+        border: none;
+        border-radius: 18px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    }
+
+    .stat-title {
+        font-size: 13px;
+        opacity: 0.9;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .stat-number {
+        font-size: 34px;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .glass {
+        background: rgba(255,255,255,0.7);
+        border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .table-container {
+        background: rgba(255,255,255,0.85);
+        padding: 20px;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        overflow-x: auto;
+        backdrop-filter: blur(6px);
+    }
+
+    table {
+        width: 100%;
+        min-width: 650px;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: linear-gradient(135deg, #2e7d32, #43a047);
+        color: white;
+        padding: 12px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+    }
+
+    tr:hover {
+        background: #f1f8e9;
+    }
+
+    .btn-update {
+        background: linear-gradient(135deg, #43a047, #66bb6a);
+        color: white;
+        padding: 7px 14px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: 0.3s;
+        display: inline-block;
+    }
+
+    .btn-update:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #2e7d32, #43a047);
+    }
+
+    @media (max-width: 768px) {
+        .stat-card {
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 26px;
+        }
+
+        table {
+            font-size: 13px;
+        }
+    }
+</style>
+
+<div class="container py-3">
+
+<h3 class="dashboard-title">👨‍🌾 Welcome, Agent {{ agent_name }}</h3>
+
+<div class="row g-3">
+
+    <div class="col-md-3 col-6">
+        <div class="stat-card glass">
+            <div class="stat-title">Total Fields</div>
+            <div class="stat-number">{{ total_fields }}</div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-6">
+        <div class="stat-card" style="background:#43a047; color:white;">
+            <div class="stat-title">Active</div>
+            <div class="stat-number">{{ active }}</div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-6">
+        <div class="stat-card" style="background:#f9a825; color:white;">
+            <div class="stat-title">At Risk</div>
+            <div class="stat-number">{{ at_risk }}</div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-6">
+        <div class="stat-card" style="background:#1e88e5; color:white;">
+            <div class="stat-title">Completed</div>
+            <div class="stat-number">{{ completed }}</div>
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-4">
+
+<h4 style="color:#2e7d32; font-weight:700;">🌾 My Assigned Fields</h4>
+
+<div class="table-container mt-3">
+
+<table>
+
+<tr>
+    <th>Name</th>
+    <th>Crop</th>
+    <th>Stage</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+
+{% for f in fields %}
+<tr>
+    <td>{{ f.name }}</td>
+    <td>{{ f.crop_type }}</td>
+    <td>{{ f.current_stage }}</td>
+    <td>{{ f.status }}</td>
+
+    <td>
+        <a href="{% url 'update' f.id %}" class="btn-update">
+            Update
+        </a>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="5" style="text-align:center; padding:20px;">
+        No assigned fields
+    </td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    }
+
+    .update-container {
+        max-width: 650px;
+        margin: 40px auto;
+        background: rgba(255,255,255,0.9);
+        padding: 30px;
+        border-radius: 18px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.10);
+        backdrop-filter: blur(8px);
+        border: 1px solid #c8e6c9;
+    }
+
+    .title {
+        text-align: center;
+        font-weight: 800;
+        color: #1b5e20;
+        margin-bottom: 25px;
+    }
+
+    label {
+        font-weight: 600;
+        color: #2e7d32;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    select, textarea {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border-radius: 10px;
+        border: 1px solid #c8e6c9;
+        background: #f9fff9;
+        outline: none;
+        transition: 0.3s;
+        font-size: 14px;
+    }
+
+    select:focus, textarea:focus {
+        border: 1px solid #66bb6a;
+        box-shadow: 0 0 8px rgba(102,187,106,0.3);
+    }
+
+    .btn-submit {
+        width: 100%;
+        margin-top: 20px;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #43a047, #66bb6a);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-submit:hover {
+        transform: scale(1.02);
+        background: linear-gradient(135deg, #2e7d32, #43a047);
+    }
+
+    @media (max-width: 768px) {
+        .update-container {
+            margin: 20px 15px;
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="update-container">
+
+<h3 class="title">✏️ Update Field: {{ field.name }}</h3>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- Stage update -->
+    <label>Stage</label>
+    <select name="stage" required>
+        <option value="">-- Select Stage --</option>
+        <option value="Planted">Planted</option>
+        <option value="Growing">Growing</option>
+        <option value="Ready">Ready</option>
+        <option value="Harvested">Harvested</option>
+    </select>
+
+    <!-- Notes -->
+    <label>Notes / Observations</label>
+    <textarea name="notes" rows="4" placeholder="Write field observations..." required></textarea>
+
+    <button type="submit" class="btn-submit">
+        Submit Update
+    </button>
+
+</form>
+
+</div>
+
+{% endblock %}
