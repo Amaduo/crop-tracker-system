@@ -168,19 +168,22 @@ def field_updates(request, id):
 
 # ---------------- REGISTER ----------------
 def register_view(request):
-    form = RegisterForm()
-
     if request.method == "POST":
         form = RegisterForm(request.POST)
+
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+
+            # 🔴 FORCE ALL REGISTERED USERS TO BE "user"
+            user.role = "user"
+            user.save()
+
             login(request, user)
 
-            # ROLE REDIRECT
-            if user.role == "admin":
-                return redirect("dashboard")
-            else:
-                return redirect("agent_dashboard")
+            return redirect("agent_dashboard")
+
+    else:
+        form = RegisterForm()
 
     return render(request, "register.html", {"form": form})
 

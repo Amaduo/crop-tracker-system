@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
@@ -9,10 +10,15 @@ from django.utils import timezone
 
 class User(AbstractUser):
     ROLE_CHOICES = (
-        ('admin', 'Admin'),
-        ('agent', 'Field Agent'),
+        ('agent', 'Agent'),
+        ('user', 'User'),
     )
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES)
+
+    role = models.CharField(
+        max_length=10,
+        choices=ROLE_CHOICES,
+        default='user'
+    )
 
 
 class Field(models.Model):
